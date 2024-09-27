@@ -100,8 +100,8 @@ in
             ruby-lsp.enable = false;              # Ruby
             # rust-analyzer.enable = false;       # Rust
             sourcekit.enable = true;              # Swift, C, C++, Obj-C, etc
+            tinymist.enable = true;               # Typst
             tsserver.enable = false;              # TypeScript
-            typst-lsp.enable = false;             # Typst
             vala-ls.enable = false;               # Vala
             # zls.enable = false;                 # Zig
           };
@@ -115,6 +115,8 @@ in
           set_vim_settings = false;
         }; 
 
+        # mini.modules.base16 = {}; # Provides a framework for base16 color palettes. # FIXME: cooked, follow directions below
+        mini.modules.comment = {};  # Adds easy per line commenting, either individually or via VISUAL.
         # mini.modules.icons = {};  # Provides icons for mini.nvim. # FIXME: cooked in nixvim, either submit an issue or pr
         mini.modules.pairs = {};  # Automatically pairs delimiters.
         mini.modules.surround = {}; # Rapid delimiter navigation.
