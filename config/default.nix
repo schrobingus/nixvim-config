@@ -105,6 +105,12 @@ in
           };
         };
 
+        # Configure Tinymist preview for Typst.
+        lsp.servers.tinymist.settings = {
+          exportPdf = "onType";
+          outputPath = "$root/$name";
+        };
+
         mini.enable = true; # Library of lightweight useful plugins.
 
         # Simple statusline for Neovim.
