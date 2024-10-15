@@ -59,7 +59,11 @@ in
         enable = true;
 
         nixGrammars = true;
-        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars;
+        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars
+          ++ (with pkgs.tree-sitter-grammars; [
+            tree-sitter-norg 
+            # tree-sitter-typst
+          ]);
         settings.ensure_installed = "all";
         settings.indent.enable = true;
         nixvimInjections = true;
@@ -100,7 +104,7 @@ in
           r-language-server.enable = false;     # R
           ruby-lsp.enable = false;              # Ruby
           # rust-analyzer.enable = false;       # Rust
-          sourcekit.enable = true;              # Swift, C, C++, Obj-C, etc
+          sourcekit.enable = false;             # Swift, C, C++, Obj-C, etc
           tinymist.enable = true;               # Typst
           ts-ls.enable = false;                 # TypeScript
           vala-ls.enable = false;               # Vala
@@ -110,6 +114,7 @@ in
 
       # Configure Tinymist preview for Typst.
       lsp.servers.tinymist.settings = {
+        formatterMode = "typstyle";
         exportPdf = "onType";
         outputPath = "$root/$name";
       };
@@ -191,7 +196,7 @@ in
       smartcase = true;
       cmdheight = 0;
 
-      foldcolumn = "0";
+      foldcolumn = "0"; # TODO: actually configure the fold column and actually make it usable please, thank :^)
       foldlevel = 99;
       foldlevelstart = -1;
       foldmethod = "expr";
@@ -232,6 +237,7 @@ in
           vim.opt.breakindent = true
           vim.opt.conceallevel = 3
           vim.opt.cursorline = false  -- might remove this one
+          vim.opt.foldcolumn = "0"
           vim.opt.number = false
           vim.cmd("IBLDisable")
         end,
