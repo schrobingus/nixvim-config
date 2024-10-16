@@ -23,7 +23,6 @@ in
       true-zen-nvim # "Zen mode" for Vim, hides surrounding content for focus.
       vim-nix # Nix functionality and integration.
 
-      # vim-swap  # Quick delimiter swapping inputs.  # NOTE: i don't think i need this
       vim-table-mode  # Allows one to make Markdown formatted tables with ease.
 
       firenvim # Embeds Neovim within web browser text areas.
@@ -112,14 +111,20 @@ in
         };
       };
 
-      # Configure Tinymist preview for Typst.
+      # Configure plugins for Typst, including Tinymist for LSP.A
+      /* NOTE: `typst-vim` actually handles most of the document highlighting.
+                Tinymist handles more of the functional areas. */
+      typst-vim = {
+        enable = true;
+        settings.conceal_math = true;
+      };
       lsp.servers.tinymist.settings = {
         formatterMode = "typstyle";
         exportPdf = "onType";
         outputPath = "$root/$name";
       };
 
-      mini.enable = true; # Library of lightweight useful plugins.
+      mini.enable = true; # Library of lightweight useful plugins, configured below.
 
       # Simple statusline for Neovim.
       mini.modules.statusline = {
@@ -164,7 +169,6 @@ in
             "WinEnter"
           ];
           silent = true;
-          # TODO: look into resize mode. in particular, make sure it works with wezterm
         };
       };
 
