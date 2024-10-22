@@ -104,6 +104,7 @@ in
           ruby-lsp.enable = false;              # Ruby
           # rust-analyzer.enable = false;       # Rust
           sourcekit.enable = false;             # Swift, C, C++, Obj-C, etc
+          texlab.enable = true;                 # TeX, LaTeX
           tinymist.enable = true;               # Typst
           ts-ls.enable = false;                 # TypeScript
           vala-ls.enable = false;               # Vala
@@ -111,12 +112,21 @@ in
         };
       };
 
-      # Configure plugins for Typst, including Tinymist for LSP.A
+      # Configure plugins for LaTeX.
+      vimtex = {
+        enable = true;
+        texlivePackage = null;  # NOTE: Provide Tex from home-manager or elsewhere.
+        settings = {
+          view_method = "skim"; # TODO: adjust for platform, skim is mac only
+        };
+      };
+
+      # Configure plugins for Typst, including Tinymist for LSP.
       /* NOTE: `typst-vim` actually handles most of the document highlighting.
                 Tinymist handles more of the functional areas. */
       typst-vim = {
         enable = true;
-        settings.conceal_math = true;
+        settings.conceal_math = 1;
       };
       lsp.servers.tinymist.settings = {
         formatterMode = "typstyle";
@@ -182,6 +192,8 @@ in
     };
 
     opts = {
+      encoding = "utf-8";
+
       number = true;
 
       cursorline = true;
@@ -191,6 +203,8 @@ in
       breakindentopt = "sbr,list:-1";
       # breakindentopt = "sbr,shift:1,list:-1";
       list = false;
+
+      conceallevel = 2;
 
       ruler = true;
       showcmd = true;
@@ -239,7 +253,6 @@ in
         pattern = plain_text_types,
         callback = function()
           vim.opt.breakindent = true
-          vim.opt.conceallevel = 3
           vim.opt.cursorline = false  -- might remove this one
           vim.opt.foldcolumn = "0"
           vim.opt.number = false
