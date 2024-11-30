@@ -29,28 +29,40 @@ in
 
       vim-pandoc  # Pandoc integration.
       vim-pandoc-syntax # Ditto, but extending to syntax.
-
-      { # Integration for the ZK plain text notes tool.
-        plugin = zk-nvim;
-        config = mkLua ''
+    ] ++ [
+        { # Integration for the ZK plain text notes tool.
+          plugin = pkgs.vimPlugins.zk-nvim;
+          config = mkLua ''
           require('zk').setup()
-        '';
-      }
+          '';
+        }
 
-      { # Jumps to a char pair quickly. Similar to Snipe, Sneak, Seek, etc.
-        plugin = leap-nvim;
-        config = mkLua ''
+        { # Jumps to a char pair quickly. Similar to Snipe, Sneak, Seek, etc.
+          plugin = pkgs.vimPlugins.leap-nvim;
+          config = mkLua ''
           require('leap').create_default_mappings()
-        '';
-      }
+          '';
+        }
 
-      { # Tools for Dart and Flutter.
-        plugin = flutter-tools-nvim;
-        config = mkLua ''
+        { # Tools for Dart and Flutter.
+          plugin = pkgs.vimPlugins.flutter-tools-nvim;
+          config = mkLua ''
           require("flutter-tools").setup {}
-        '';
-      }
-    ];
+          '';
+        }
+
+        {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            name = "tinted-vim";
+            src = pkgs.fetchFromGitHub {
+              owner = "tinted-theming";
+              repo = "tinted-vim";
+              rev = "577fe8125d74ff456cf942c733a85d769afe58b7";
+              hash = "sha256-e0bpPySdJf0F68Ndanwm+KWHgQiZ0s7liLhvJSWDNsA=";
+            };
+          };
+        }
+      ];
 
     plugins = {
       # Treesitter parsing for Neovim.
@@ -63,8 +75,11 @@ in
             tree-sitter-norg 
             # tree-sitter-typst
           ]);
-        settings.ensure_installed = "all";
-        settings.indent.enable = true;
+        settings = {
+          ensure_installed = "all";
+          indent.enable = true;
+          highlight.enable = true;
+        };
         nixvimInjections = true;
       };
 
@@ -187,25 +202,20 @@ in
       gitsigns.enable = true; # Adds git signs to the gutter.
       indent-blankline.enable = true; # Whitespace / indent guides.
       multicursors.enable = true; # Functionality for multiple cursors at once.
-      rainbow-delimiters.enable = true; # Distinguishes delimiter pairs with colors.
+      rainbow-delimiters.enable = false; # Distinguishes delimiter pairs with colors.
       trouble.enable = true;  # A diagnostics and quickfix list.
     };
 
     opts = {
       encoding = "utf-8";
-
       number = true;
-
       cursorline = true;
       wrap = true;
       linebreak = true;
       breakindent = false;
       breakindentopt = "sbr,list:-1";
-      # breakindentopt = "sbr,shift:1,list:-1";
       list = false;
-
       conceallevel = 2;
-
       ruler = true;
       showcmd = true;
       showmode = true;
@@ -213,16 +223,13 @@ in
       ignorecase = true;
       smartcase = true;
       cmdheight = 0;
-
       foldcolumn = "0"; # TODO: actually configure the fold column and actually make it usable please, thank :^)
       foldlevel = 99;
       foldlevelstart = -1;
       foldmethod = "expr";
       foldexpr = "nvim_treesitter#foldexpr()";
       foldenable = true;
-
       termguicolors = true;
-
       expandtab = true;
       tabstop = 2;
       softtabstop = 2;
@@ -231,18 +238,12 @@ in
       cindent = true;
       smartindent = true;
       smarttab = true;
-
       laststatus = 3;
-
       scrolloff = 6;
-
       backspace = "indent,eol,start";
-
       guifont = "SF Mono:h15";
     };
 
-    # TODO: make the rainbow colors correspond to base16
-    # FIXME: for some reason, inscribed blocks are not working in treesitter, including the one below
     extraConfigLua = /* lua */ ''
       local plain_text_types = { "text", "markdown", "pandoc", "tex", "typst" }
 
@@ -253,44 +254,21 @@ in
         pattern = plain_text_types,
         callback = function()
           vim.opt.breakindent = true
-          vim.opt.cursorline = false  -- might remove this one
+          vim.opt.cursorline = false
           vim.opt.foldcolumn = "0"
           vim.opt.number = false
           vim.cmd("IBLDisable")
         end,
       })
 
-      local highlight = {
-        "RainbowRed",
-        "RainbowGreen",
-        "RainbowYellow",
-        "RainbowBlue",
-        "RainbowViolet",
-      }
-
-      local hooks = require "ibl.hooks"
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#FF9EA0" })
-        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#AED69F" })
-        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#FFDA97" })
-        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#A0D0EF" })
-        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#F4CEF5" })
-        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#00ADA1" })
-      end)
-
-      vim.g.rainbow_delimiters = { highlight = highlight }
-      -- TODO: scope acts specifically with curlies and nothing else, fix that
-      -- TODO: scope underlines statement being used, which i'm not a big fan of. disable that
       require("ibl").setup {
         indent = { char = "▏" },
         scope = {
+          enabled = false,
           show_start = true,
           show_end = true,
-          highlight = highlight
         } 
       }
-
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 
       require("fzf-lua").register_ui_select()
 
@@ -320,8 +298,12 @@ in
           },
 
           -- Every backslash in the URL regular expressions must have
-          -- double backslashes due to the way Lua handles strings.
+          -- another backslash due to the way Lua handles strings.
           ["https?:\\/\\/(?:www\\.)?google\\.com\\/.*"] = {
+            priority = 1,
+            takeover = "never"
+          },
+          ["https?:\\/\\/(?:translate\\.)?google\\.com\\/.*"] = {
             priority = 1,
             takeover = "never"
           },
@@ -334,6 +316,14 @@ in
             takeover = "never"
           },
           ["https?:\\/\\/(?:www\\.)?github\\.com\\/.*\\/blob\\/.*"] = {
+            priority = 1,
+            takeover = "never"
+          },
+          ["https?:\\/\\/(?:learn\\.)?zybooks\\.com\\/.*"] = {
+            priority = 1,
+            takeover = "never"
+          },
+          ["https?:\\/\\/(?:www\\.)?desmos\\.com\\/.*"] = {
             priority = 1,
             takeover = "never"
           }
@@ -364,7 +354,7 @@ in
       }
     '';
 
-    colorscheme = "jellybeans"; # TODO: change to base16
+    colorscheme = "base16-tomorrow-night"; # TODO: change to base16
 
     clipboard = {
       register = "unnamedplus";

@@ -18,7 +18,7 @@
   } @ inputs: let
     config = ./config;
   in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+    flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -26,7 +26,7 @@
         "aarch64-darwin"
       ];
 
-      perSystem = {system, ...}: let
+      perSystem = { system, ... }: let
         pkgs = import nixpkgs {
           inherit system;
         };
