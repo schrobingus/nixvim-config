@@ -170,7 +170,6 @@ in
         };
       };
 
-      # mini.modules.base16 = {}; # Provides a framework for base16 color palettes. # FIXME: cooked, follow directions below
       mini.modules.pairs = {};  # Automatically pairs delimiters.
       mini.modules.surround = {}; # Rapid delimiter navigation.
 
@@ -369,6 +368,18 @@ in
         mode = [ "n" "x" ];
         key = ";";
         action = ":";
+      }
+
+      # Navigate via the visual line rather than the logical line by default.
+      {
+        mode = [ "n" "x" ];
+        key = "j";
+        action = "gj";
+      }
+      {
+        mode = [ "n" "x" ];
+        key = "k";
+        action = "gk";
       }
 
       # Switch back to NORMAL from INSERT using `jj`.
