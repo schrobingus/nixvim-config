@@ -149,6 +149,18 @@ in
         outputPath = "$root/$name";
       };
 
+      luasnip = {
+        enable = true;
+        settings = {
+          enable_autosnippets = true;
+          store_selection_keys = "<Tab>";
+        };
+        fromSnipmate = [{
+          lazyLoad = true;
+          paths = ["~/.config/snippets"];
+        }];
+      };
+
       mini.enable = true; # Library of lightweight useful plugins, configured below.
 
       # Simple statusline for Neovim.
@@ -268,7 +280,7 @@ in
           show_end = true,
         } 
       }
-
+      
       require("fzf-lua").register_ui_select()
 
       if vim.g.started_by_firenvim then
