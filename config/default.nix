@@ -29,6 +29,7 @@ in
 
       vim-pandoc  # Pandoc integration.
       vim-pandoc-syntax # Ditto, but extending to syntax.
+      nabla-nvim  # TeX inline displays for plain text.
     ] ++ [
         { # Integration for the ZK plain text notes tool.
           plugin = pkgs.vimPlugins.zk-nvim;
@@ -587,6 +588,14 @@ in
         mode = "n";
         key = "<Leader>xQ";
         action = "<cmd>Trouble qflist toggle<cr>";
+        options = { noremap = true; silent = true; };
+      }
+
+      # Bindings for nabla.nvim.
+      {
+        mode = "n";
+        key = "<Leader>p";
+        action = "<CMD>lua require('nabla').popup()<CR>";
         options = { noremap = true; silent = true; };
       }
     ];
