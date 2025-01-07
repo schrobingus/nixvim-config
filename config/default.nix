@@ -27,8 +27,6 @@ in
 
       firenvim # Embeds Neovim within web browser text areas.
 
-      vim-pandoc  # Pandoc integration.
-      vim-pandoc-syntax # Ditto, but extending to syntax.
       nabla-nvim  # TeX inline displays for plain text.
     ] ++ [
         { # Integration for the ZK plain text notes tool.
@@ -39,6 +37,7 @@ in
         }
 
         { # Jumps to a char pair quickly. Similar to Snipe, Sneak, Seek, etc.
+          # FIXME: "s-h" in any capacity will refuse unless you wait like 2 or 3 seconds. fix this up
           plugin = pkgs.vimPlugins.leap-nvim;
           config = mkLua ''
           require('leap').create_default_mappings()
@@ -71,13 +70,127 @@ in
         enable = true;
 
         nixGrammars = true;
-        grammarPackages = pkgs.vimPlugins.nvim-treesitter.allGrammars
-          ++ (with pkgs.tree-sitter-grammars; [
-            tree-sitter-norg 
-            # tree-sitter-typst
-          ]);
+        # The following are from nvim-treesitter.allGrammars. Some are commented for exclusion.
+        grammarPackages = with pkgs.tree-sitter-grammars; [
+          tree-sitter-bash
+          # tree-sitter-beancount
+          # tree-sitter-bibtex
+          # tree-sitter-bitbake
+          # tree-sitter-bqn
+          tree-sitter-c
+          tree-sitter-c-sharp
+          tree-sitter-clojure
+          tree-sitter-cmake
+          tree-sitter-comment
+          tree-sitter-commonlisp
+          tree-sitter-cpp
+          tree-sitter-css
+          tree-sitter-cuda
+          # tree-sitter-cue
+          tree-sitter-dart
+          # tree-sitter-devicetree
+          tree-sitter-dockerfile
+          # tree-sitter-dot
+          # tree-sitter-earthfile
+          # tree-sitter-eex
+          tree-sitter-elisp
+          tree-sitter-elixir
+          tree-sitter-elm
+          # tree-sitter-embedded-template
+          tree-sitter-erlang
+          tree-sitter-fennel
+          tree-sitter-fish
+          # tree-sitter-fortran
+          tree-sitter-gdscript
+          tree-sitter-gleam
+          # tree-sitter-glimmer
+          tree-sitter-glsl
+          tree-sitter-go
+          tree-sitter-godot-resource
+          # tree-sitter-gomod
+          # tree-sitter-gowork
+          # tree-sitter-graphql
+          tree-sitter-haskell
+          # tree-sitter-hcl
+          # tree-sitter-heex
+          # tree-sitter-hjson
+          tree-sitter-html
+          tree-sitter-http
+          # tree-sitter-hyprlang
+          # tree-sitter-janet-simple
+          tree-sitter-java
+          tree-sitter-javascript
+          tree-sitter-jsdoc
+          tree-sitter-json
+          tree-sitter-json5
+          tree-sitter-jsonnet
+          tree-sitter-julia
+          tree-sitter-just
+          # tree-sitter-koka
+          tree-sitter-kotlin
+          # tree-sitter-latex
+          # tree-sitter-ledger
+          tree-sitter-llvm
+          tree-sitter-lua
+          tree-sitter-make
+          # tree-sitter-markdown
+          # tree-sitter-nickel
+          tree-sitter-nix
+          tree-sitter-norg
+          tree-sitter-norg-meta
+          tree-sitter-nu
+          tree-sitter-ocaml
+          tree-sitter-org-nvim
+          tree-sitter-perl
+          # tree-sitter-pgn
+          tree-sitter-php
+          # tree-sitter-pioasm
+          # tree-sitter-prisma
+          # tree-sitter-proto
+          # tree-sitter-pug
+          tree-sitter-python
+          # tree-sitter-ql
+          # tree-sitter-ql-dbscheme
+          tree-sitter-query
+          tree-sitter-r
+          tree-sitter-regex
+          # tree-sitter-rego
+          # tree-sitter-river
+          tree-sitter-rst
+          tree-sitter-ruby
+          tree-sitter-rust
+          tree-sitter-scala
+          tree-sitter-scheme
+          tree-sitter-scss
+          # tree-sitter-smithy
+          # tree-sitter-solidity
+          # tree-sitter-sparql
+          tree-sitter-sql
+          # tree-sitter-supercollider
+          # tree-sitter-surface
+          tree-sitter-svelte
+          # tree-sitter-talon
+          # tree-sitter-templ
+          # tree-sitter-tiger
+          # tree-sitter-tlaplus
+          tree-sitter-toml
+          # tree-sitter-tsq
+          # tree-sitter-turtle
+          # tree-sitter-twig
+          tree-sitter-typescript
+          # tree-sitter-typst
+          # tree-sitter-uiua
+          # tree-sitter-verilog
+          tree-sitter-vim
+          tree-sitter-vue
+          # tree-sitter-wgsl
+          # tree-sitter-wing
+          tree-sitter-yaml
+          # tree-sitter-yang
+          tree-sitter-zig
+        ];
         settings = {
-          ensure_installed = "all";
+          # ensure_installed = "all";
           indent.enable = true;
           highlight.enable = true;
         };
@@ -168,7 +281,17 @@ in
         };
       };
 
-      # Configure plugins for LaTeX.
+      # Configure Markview.nvim.
+      markview = {
+        enable = false; # TODO: conceal links on a line basis so they don't take up space. this isn't in markview yet, open an issue or pr
+        settings = {
+          buf_ignore = [ "nofile" ];
+          modes = [ "n" "x" ];  
+          hybrid_modes = [ "i" "r" ];
+        };
+      };
+
+      # Configure VimTeX.
       vimtex = {
         enable = true;
         texlivePackage = null;  # NOTE: Provide Tex from home-manager or elsewhere.
@@ -224,7 +347,7 @@ in
       };
 
       mini.modules.pairs = {};  # Automatically pairs delimiters.
-      mini.modules.surround = {}; # Rapid delimiter navigation.
+      # mini.modules.surround = {}; # Rapid delimiter navigation. # TODO: make it so that surround has different bindings; they're interfering with leap
 
       # Previews referenced colors within the editor.
       nvim-colorizer = {
@@ -267,7 +390,7 @@ in
       breakindent = false;
       breakindentopt = "sbr,list:-1";
       list = false;
-      conceallevel = 2;
+      conceallevel = 0; # TODO: use 0 until you fix your conceal on some things; then use 2
       ruler = true;
       showcmd = true;
       showmode = true;
@@ -297,7 +420,7 @@ in
     };
 
     extraConfigLua = /* lua */ ''
-      local plain_text_types = { "text", "markdown", "pandoc", "tex", "typst" }
+      local plain_text_types = { "text", "markdown", "rmd", "tex", "typst" }
 
       vim.api.nvim_create_augroup("PlainTextSettings", { clear = true })
 
@@ -386,11 +509,11 @@ in
 
       require('gitsigns').setup {
         signs = {
-          add = { text = '+' },
-          change = { text = '~' },
-          delete = { text = '_' },
-          topdelete = { text = '‾' },
-          changedelete = { text = '~' },
+          -- add = { text = '+' },
+          -- change = { text = '~' },
+          -- delete = { text = '_' },
+          -- topdelete = { text = '‾' },
+          -- changedelete = { text = '~' },
         },
         on_attach = function(bufnr)
           local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
@@ -596,6 +719,12 @@ in
         mode = "n";
         key = "<Leader>p";
         action = "<CMD>lua require('nabla').popup()<CR>";
+        options = { noremap = true; silent = true; };
+      }
+      {
+        mode = "n";
+        key = "<Leader>P";
+        action = "<CMD>lua require('nabla').toggle_virt({ autogen = true, silent = true })<CR>";
         options = { noremap = true; silent = true; };
       }
     ];
