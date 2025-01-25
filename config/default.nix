@@ -19,6 +19,7 @@ in
 
     extraPlugins = with pkgs.vimPlugins; [
       jellybeans-vim  # Jellybeans theme. # TODO: switch to base16
+      vim-colors-solarized  # Solarized theme.
 
       true-zen-nvim # "Zen mode" for Vim, hides surrounding content for focus.
       vim-nix # Nix functionality and integration.
@@ -537,7 +538,7 @@ in
       -- vim.o.statuscolumn = "%!v:lua.statusColumn()"
     '';
 
-    colorscheme = "base16-solarized-dark"; # TODO: change to base16
+    colorscheme = "base16-tomorrow-night"; # TODO: change to base16
 
     clipboard = {
       register = "unnamedplus";
