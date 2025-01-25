@@ -219,6 +219,7 @@ in
           # bashls.enable = true;               # Bash
           clojure-lsp.enable = false;           # Clojure
           omnisharp.enable = false;             # C#
+          clangd.enable = true;                 # C/C++
           cssls.enable = false;                 # CSS
           dartls.enable = true;                 # Dart
           denols.enable = false;                # Deno
@@ -232,7 +233,7 @@ in
           r-language-server.enable = false;     # R
           ruby-lsp.enable = false;              # Ruby
           # rust-analyzer.enable = false;       # Rust
-          sourcekit.enable = false;             # Swift, C, C++, Obj-C, etc
+          # sourcekit.enable = false;           # Swift, C, C++, Obj-C, etc
           texlab.enable = true;                 # TeX, LaTeX
           tinymist.enable = true;               # Typst
           ts-ls.enable = false;                 # TypeScript
@@ -509,11 +510,12 @@ in
 
       require('gitsigns').setup {
         signs = {
-          -- add = { text = '+' },
-          -- change = { text = '~' },
-          -- delete = { text = '_' },
-          -- topdelete = { text = '‾' },
-          -- changedelete = { text = '~' },
+          add          = { text = '│' },
+          change       = { text = '│' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
         },
         on_attach = function(bufnr)
           local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
@@ -527,9 +529,15 @@ in
           vim.keymap.set('n', ']c', require('gitsigns').next_hunk, { buffer = bufnr })
         end,
       }
+
+      -- _G.statusColumn = function()
+      --   return "bingus"
+      -- end
+      
+      -- vim.o.statuscolumn = "%!v:lua.statusColumn()"
     '';
 
-    colorscheme = "base16-tomorrow-night"; # TODO: change to base16
+    colorscheme = "base16-solarized-dark"; # TODO: change to base16
 
     clipboard = {
       register = "unnamedplus";
