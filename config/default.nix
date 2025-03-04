@@ -18,38 +18,26 @@ in
     # NOTE: extraConfigLua, extraConfigLuaPre and extraConfigLuaPost are both valid options.
 
     extraPlugins = with pkgs.vimPlugins; [
-      jellybeans-vim  # Jellybeans theme. # TODO: switch to base16
-      vim-colors-solarized  # Solarized theme.
-
       true-zen-nvim # "Zen mode" for Vim, hides surrounding content for focus.
       vim-nix # Nix functionality and integration.
-
       vim-table-mode  # Allows one to make Markdown formatted tables with ease.
-
       firenvim # Embeds Neovim within web browser text areas.
-
       nabla-nvim  # TeX inline displays for plain text.
     ] ++ [
         { # Integration for the ZK plain text notes tool.
           plugin = pkgs.vimPlugins.zk-nvim;
-          config = mkLua ''
-          require('zk').setup()
-          '';
+          config = mkLua "require('zk').setup()";
         }
 
         { # Jumps to a char pair quickly. Similar to Snipe, Sneak, Seek, etc.
           # FIXME: "s-h" in any capacity will refuse unless you wait like 2 or 3 seconds. fix this up
           plugin = pkgs.vimPlugins.leap-nvim;
-          config = mkLua ''
-          require('leap').create_default_mappings()
-          '';
+          config = mkLua "require('leap').create_default_mappings()";
         }
 
         { # Tools for Dart and Flutter.
           plugin = pkgs.vimPlugins.flutter-tools-nvim;
-          config = mkLua ''
-          require("flutter-tools").setup {}
-          '';
+          config = mkLua "require('flutter-tools').setup()";
         }
 
         {
@@ -62,6 +50,31 @@ in
               hash = "sha256-e0bpPySdJf0F68Ndanwm+KWHgQiZ0s7liLhvJSWDNsA=";
             };
           };
+        }
+
+        {
+          plugin = pkgs.vimUtils.buildVimPlugin {
+            name = "auto-dark-mode";
+            src = pkgs.fetchFromGitHub {
+              owner = "f-person";
+              repo = "auto-dark-mode.nvim";
+              rev = "02ef9553e2a1d6e861bc6955d58ce5883d28a6ad";
+              hash = "sha256-FTXakglUrqifEXjzES6M4L+rthItu5rlw6QyIOLYNOc=";
+            };
+          };
+          config = mkLua /*lua*/ ''
+          require('auto-dark-mode').setup({
+            update_interval = 1000,
+            set_dark_mode = function()
+              vim.api.nvim_set_option_value('background', 'dark', {})
+              vim.cmd('colorscheme base16-tomorrow-night')
+            end,
+            set_light_mode = function()
+              vim.api.nvim_set_option_value('background', 'light', {})
+              vim.cmd('colorscheme base16-tomorrow')
+            end
+          })
+          '';
         }
       ];
 
@@ -253,18 +266,18 @@ in
             { name = "luasnip"; }
           ];
           mapping = {
-            "<CR>" = ''
+            "<CR>" = /*lua*/ ''
               cmp.mapping.confirm({
                 select = false,
                 behavior = cmp.ConfirmBehavior.Replace
               })
             '';
-            "<Tab>" = ''
+            "<Tab>" = /*lua*/ ''
               cmp.mapping(cmp.mapping.select_next_item({
                 behavior = cmp.SelectBehavior.Select
               }), {"i", "s"})
             '';
-            "<S-Tab>" = ''
+            "<S-Tab>" = /*lua*/ ''
               cmp.mapping(cmp.mapping.select_prev_item({
                 behavior = cmp.SelectBehavior.Select
               }), {"i", "s"})
@@ -275,7 +288,7 @@ in
             "<C-d>" = "cmp.mapping.scroll_docs(-4)";
             "<C-f>" = "cmp.mapping.scroll_docs(4)";
           };
-          snippet.expand = ''
+          snippet.expand = /*lua*/ ''
             function(args) 
               require('luasnip').lsp_expand(args.body) 
             end
@@ -307,7 +320,7 @@ in
                 Tinymist handles more of the functional areas. */
       typst-vim = {
         enable = true;
-        settings.conceal_math = 1;
+        settings.conceal_math = 0;
       };
       lsp.servers.tinymist.settings = {
         formatterMode = "typstyle";
@@ -389,7 +402,7 @@ in
       cursorline = true;
       wrap = true;
       linebreak = true;
-      breakindent = false;
+      breakindent = true;
       breakindentopt = "sbr,list:-1";
       list = false;
       conceallevel = 0; # TODO: use 0 until you fix your conceal on some things; then use 2
@@ -430,7 +443,6 @@ in
         group = "PlainTextSettings",
         pattern = plain_text_types,
         callback = function()
-          vim.opt.breakindent = true
           vim.opt.cursorline = false
           vim.opt.foldcolumn = "0"
           vim.opt.number = false
@@ -531,14 +543,14 @@ in
         end,
       }
 
+      -- TODO: make a statuscolumn
       -- _G.statusColumn = function()
       --   return "bingus"
       -- end
-      
       -- vim.o.statuscolumn = "%!v:lua.statusColumn()"
     '';
 
-    colorscheme = "base16-tomorrow-night"; # TODO: change to base16
+    colorscheme = "base16-tomorrow-night";
 
     clipboard = {
       register = "unnamedplus";
