@@ -15,36 +15,36 @@
     flake-parts,
     nixvim,
     ...
-  } @ inputs: let
-    config = ./config;
-  in
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
+    } @ inputs: let
+      config = ./config;
+    in
+      flake-parts.lib.mkFlake { inherit inputs; } {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
 
-      perSystem = { system, ... }: let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
+        perSystem = { system, ... }: let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
 
-        nixvimLib = nixvim.lib.${system};
+          nixvimLib = nixvim.lib.${system};
 
-        nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
-          pkgs = pkgs;
-          module = config;
-        };
-      in {
+          nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+            pkgs = pkgs;
+            module = config;
+          };
+        in {
           checks = {
             default = nixvimLib.check.mkTestDerivationFromNvim {
               inherit nvim;
               name = "My Bingus-enhanced Nixvim Configuration";
             };
           };
-          
+
           packages = {
             default = nvim;
           };
@@ -53,5 +53,5 @@
             packages = [ nvim ];
           };
         };
-    };
+      };
 }
