@@ -18,6 +18,7 @@
   config.extraConfigLuaPost = /*lua*/ ''
   vim.api.nvim_create_augroup("PlainTextSettings", { clear = true })
 
+  -- FIXME: these settings set globally, not per buffer. per buffer would be preferred
   vim.api.nvim_create_autocmd("FileType", {
     group = "PlainTextSettings",
     pattern = vim.g.plain_text_types,

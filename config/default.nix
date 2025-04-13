@@ -1,10 +1,15 @@
 { ... }: 
 
+# TODO: integrate luasnip into your workflow
+# TODO: integrate multicursors into your workflow
+# FIXME: markdown conceal that doesn't completely obstruct the view
+# TODO: configure foldcolumn
+
 {
   imports = [
     ./extraConfig.nix
 
-    ./plugins/langs/dart-flutter.nix
+    # ./plugins/langs/dart-flutter.nix
     ./plugins/langs/markdown.nix
     ./plugins/langs/tex.nix
     ./plugins/langs/typst.nix
@@ -12,22 +17,22 @@
     ./plugins/cmp.nix
     ./plugins/colorizer.nix
     ./plugins/extras.nix
-    ./plugins/firenvim.nix
+    # ./plugins/firenvim.nix
     ./plugins/fzf.nix
     ./plugins/gitsigns.nix
     ./plugins/indent-blankline.nix
     ./plugins/leap.nix
     ./plugins/lsp.nix
-    ./plugins/luasnip.nix
+    # ./plugins/luasnip.nix     
     ./plugins/mini/default.nix # Mini module options configured there.
-    ./plugins/multicursors.nix
+    # ./plugins/multicursors.nix  
     ./plugins/nabla.nix
     ./plugins/rainbow-delimiters.nix
     ./plugins/smart-splits.nix
     ./plugins/theming.nix
     ./plugins/treesitter.nix
     ./plugins/trouble.nix
-    ./plugins/zk.nix
+    # ./plugins/zk.nix
   ];
 
   config = {
@@ -42,7 +47,7 @@
       breakindent = true;
       breakindentopt = "sbr,list:-1";
       list = false;
-      conceallevel = 0; # TODO: use 0 until you fix your conceal on some things; then use 2
+      conceallevel = 0; 
       ruler = true;
       showcmd = true;
       showmode = true;
@@ -50,7 +55,7 @@
       ignorecase = true;
       smartcase = true;
       cmdheight = 0;
-      foldcolumn = "0"; # TODO: actually configure the fold column and actually make it usable please, thank :^)
+      foldcolumn = "0"; 
       foldlevel = 99;
       foldlevelstart = -1;
       foldenable = true;
@@ -98,7 +103,7 @@
       # Switch back to NORMAL from INSERT using `jj`.
       {
         mode = "i";
-        key = "jj";
+        key = "jk";
         action = "<Esc>";
       }
 
