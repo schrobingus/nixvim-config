@@ -30,7 +30,7 @@
       jsonls.enable = true;                 # JSON
       julials.enable = false;               # Julia
       nimls.enable = false;                 # Nim
-      pylsp.enable = true;                  # Python
+      # pylsp.enable = true;                # Python  # FIXME: broken on tahoe
       r-language-server.enable = false;     # R
       ruby-lsp.enable = false;              # Ruby
       # rust-analyzer.enable = false;       # Rust
