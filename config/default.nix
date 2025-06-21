@@ -7,12 +7,15 @@
 
 {
   imports = [
-    ./extraConfig.nix
+    ./extra-config.nix
 
-    # ./plugins/langs/dart-flutter.nix
-    ./plugins/langs/markdown.nix
-    ./plugins/langs/tex.nix
-    ./plugins/langs/typst.nix
+    ./langs/extra-support.nix
+
+    ./langs/c-cpp-objc.nix
+    # ./langs/dart-flutter.nix
+    ./langs/markdown.nix
+    ./langs/tex.nix
+    ./langs/typst.nix
 
     ./plugins/cmp.nix
     ./plugins/colorizer.nix
@@ -22,7 +25,6 @@
     ./plugins/gitsigns.nix
     ./plugins/indent-blankline.nix
     ./plugins/leap.nix
-    ./plugins/lsp.nix
     # ./plugins/luasnip.nix     
     ./plugins/mini/default.nix # Mini module options configured there.
     # ./plugins/multicursors.nix  
@@ -30,7 +32,7 @@
     ./plugins/rainbow-delimiters.nix
     ./plugins/smart-splits.nix
     ./plugins/theming.nix
-    ./plugins/treesitter.nix
+    ./plugins/ts-lsp.nix
     ./plugins/trouble.nix
     # ./plugins/zk.nix
   ];
