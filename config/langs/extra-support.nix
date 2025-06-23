@@ -114,22 +114,22 @@
 
   config.plugins.lsp.servers = {
     # bashls.enable = true;               # Bash
-    clojure-lsp.enable = false;           # Clojure
+    clojure_lsp.enable = false;           # Clojure
     omnisharp.enable = false;             # C#
     cssls.enable = false;                 # CSS
     denols.enable = false;                # Deno
     gdscript.enable = false;              # GDScript
     html.enable = false;                  # HTML
-    java-language-server.enable = false;  # Java
+    java_language_server.enable = false;  # Java
     jsonls.enable = true;                 # JSON
     julials.enable = false;               # Julia
     nimls.enable = false;                 # Nim
-    # pylsp.enable = true;                # Python  # FIXME: broken on tahoe
-    r-language-server.enable = false;     # R
-    ruby-lsp.enable = false;              # Ruby
-    # rust-analyzer.enable = false;       # Rust
-    ts-ls.enable = false;                 # TypeScript
-    vala-ls.enable = false;               # Vala
+    pyright.enable = true;                # Python
+    r_language_server.enable = false;     # R
+    ruby_lsp.enable = false;              # Ruby
+    # rust_analyzer.enable = false;       # Rust
+    ts_ls.enable = false;                 # TypeScript
+    vala_ls.enable = false;               # Vala
     # zls.enable = false;                 # Zig
   };
 }

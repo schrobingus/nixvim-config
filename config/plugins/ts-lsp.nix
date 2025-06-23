@@ -36,8 +36,8 @@
       };
     };
     servers = {
-      nil-ls.enable = true; 
-      lua-ls.enable = true;
+      nil_ls.enable = true; 
+      lua_ls.enable = true;
     };
   };
   config.plugins.cmp.settings.sources = [
