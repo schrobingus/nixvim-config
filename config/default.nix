@@ -56,7 +56,7 @@
       hlsearch = true;
       ignorecase = true;
       smartcase = true;
-      cmdheight = 0;
+      cmdheight = 1;
       foldcolumn = "0"; 
       foldlevel = 99;
       foldlevelstart = -1;
