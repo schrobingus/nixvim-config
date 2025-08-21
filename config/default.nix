@@ -1,9 +1,9 @@
-{ ... }: 
+{ ... }:
 
-# TODO: integrate luasnip into your workflow
 # TODO: integrate multicursors into your workflow
 # FIXME: markdown conceal that doesn't completely obstruct the view
 # TODO: configure foldcolumn
+# TODO: try this tabline https://github.com/iofq/dart.nvim
 
 {
   imports = [
@@ -12,7 +12,7 @@
     ./langs/extra-support.nix
 
     ./langs/c-cpp-objc.nix
-    # ./langs/dart-flutter.nix
+    ./langs/dart-flutter.nix
     ./langs/markdown.nix
     ./langs/tex.nix
     ./langs/typst.nix
@@ -20,21 +20,20 @@
     ./plugins/cmp.nix
     ./plugins/colorizer.nix
     ./plugins/extras.nix
-    # ./plugins/firenvim.nix
     ./plugins/fzf.nix
-    ./plugins/gitsigns.nix
-    ./plugins/indent-blankline.nix
+    # ./plugins/gitsigns.nix
+    # ./plugins/indent-blankline.nix
     ./plugins/leap.nix
-    # ./plugins/luasnip.nix     
+    # ./plugins/luasnip.nix
     ./plugins/mini/default.nix # Mini module options configured there.
-    # ./plugins/multicursors.nix  
+    # ./plugins/multicursors.nix
     ./plugins/nabla.nix
+    # ./plugins/nvim-tree.nix
     ./plugins/rainbow-delimiters.nix
-    ./plugins/smart-splits.nix
+    # ./plugins/smart-splits.nix
     ./plugins/theming.nix
     ./plugins/ts-lsp.nix
     ./plugins/trouble.nix
-    # ./plugins/zk.nix
   ];
 
   config = {
@@ -49,7 +48,7 @@
       breakindent = true;
       breakindentopt = "sbr,list:-1";
       list = false;
-      conceallevel = 0; 
+      conceallevel = 0;
       ruler = true;
       showcmd = true;
       showmode = true;
@@ -57,7 +56,7 @@
       ignorecase = true;
       smartcase = true;
       cmdheight = 1;
-      foldcolumn = "0"; 
+      foldcolumn = "0";
       foldlevel = 99;
       foldlevelstart = -1;
       foldenable = true;
@@ -153,6 +152,33 @@
         mode = "i";
         key = "<C-l>";
         action = "<Right>";
+        options = { noremap = true; silent = true; };
+      }
+
+      # Window switching in NORMAL mode.
+      # NOTE: Comment out and disable when using Smart Splits.
+      {
+        mode = "n";
+        key = "<C-h>";
+        action = "<C-w>h";
+        options = { noremap = true; silent = true; };
+      }
+      {
+        mode = "n";
+        key = "<C-j>";
+        action = "<C-w>j";
+        options = { noremap = true; silent = true; };
+      }
+      {
+        mode = "n";
+        key = "<C-k>";
+        action = "<C-w>k";
+        options = { noremap = true; silent = true; };
+      }
+      {
+        mode = "n";
+        key = "<C-l>";
+        action = "<C-w>l";
         options = { noremap = true; silent = true; };
       }
     ];

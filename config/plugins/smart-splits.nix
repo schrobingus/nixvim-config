@@ -17,28 +17,24 @@
     {
       mode = "n";
       key = "<C-h>";
-      # action = "<C-w>h";
       action = "<cmd>lua require('smart-splits').move_cursor_left()<CR>";
       options = { noremap = true; silent = true; };
     }
     {
       mode = "n";
       key = "<C-j>";
-      # action = "<C-w>j";
       action = "<cmd>lua require('smart-splits').move_cursor_down()<CR>";
       options = { noremap = true; silent = true; };
     }
     {
       mode = "n";
       key = "<C-k>";
-      # action = "<C-w>k";
       action = "<cmd>lua require('smart-splits').move_cursor_up()<CR>";
       options = { noremap = true; silent = true; };
     }
     {
       mode = "n";
       key = "<C-l>";
-      # action = "<C-w>l";
       action = "<cmd>lua require('smart-splits').move_cursor_right()<CR>";
       options = { noremap = true; silent = true; };
     }
