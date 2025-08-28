@@ -13,6 +13,7 @@
 
     ./langs/c-cpp-objc.nix
     ./langs/dart-flutter.nix
+    ./langs/harper.nix
     ./langs/markdown.nix
     ./langs/tex.nix
     ./langs/typst.nix

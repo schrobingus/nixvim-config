@@ -8,7 +8,7 @@ let
 in
 { # Tools for Dart and Flutter.
   config.extraPlugins = [
-    {      
+    {
       plugin = pkgs.vimPlugins.flutter-tools-nvim;
       config = mkLua "require('flutter-tools').setup()";
     }
