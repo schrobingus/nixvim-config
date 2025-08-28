@@ -15,5 +15,11 @@
   #   pkgs.tree-sitter-grammars.tree-sitter-bibtex
   # ];
 
-  config.plugins.lsp.servers.texlab.enable = true;
+  config.plugins.lsp.servers = {
+    texlab.enable = true;
+    ltex = { # TODO: temporary, harper doesn't support latex yet
+      enable = true;
+      filetypes = [ "tex" ];
+    };
+  };
 }
