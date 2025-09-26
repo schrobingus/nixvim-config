@@ -11,6 +11,8 @@
 
     ./langs/extra-support.nix
 
+    ./plugins/mini/default.nix # Mini module options configured there.
+
     ./langs/c-cpp-objc.nix
     ./langs/dart-flutter.nix
     ./langs/harper.nix
@@ -20,17 +22,17 @@
 
     ./plugins/cmp.nix
     ./plugins/colorizer.nix
+    ./plugins/dart-tabline.nix
     ./plugins/extras.nix
     ./plugins/fzf.nix
     # ./plugins/gitsigns.nix
     # ./plugins/indent-blankline.nix
     ./plugins/leap.nix
     # ./plugins/luasnip.nix
-    ./plugins/mini/default.nix # Mini module options configured there.
     # ./plugins/multicursors.nix
     ./plugins/nabla.nix
     # ./plugins/nvim-tree.nix
-    ./plugins/rainbow-delimiters.nix
+    # ./plugins/rainbow-delimiters.nix
     # ./plugins/smart-splits.nix
     ./plugins/theming.nix
     ./plugins/ts-lsp.nix

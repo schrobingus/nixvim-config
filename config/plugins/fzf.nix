@@ -16,31 +16,25 @@
     }
     {
       mode = "n";
-      key = "<leader>gf";
-      options.silent = true;
-      action = "<CMD>FzfLua git_files<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>fr";
+      key = "<leader>F";
       options.silent = true;
       action = "<CMD>FzfLua oldfiles<CR>";
     }
     {
       mode = "n";
+      key = "<leader>G";
+      options.silent = true;
+      action = "<CMD>FzfLua git_files<CR>";
+    }
+    {
+      mode = "n";
       key = "<leader>g";
       options.silent = true;
-      action = "<CMD>FzfLua grep_visual<CR>";
+      action = "<CMD>FzfLua grep<CR>";
     }
     {
       mode = "n";
-      key = "<leader>*";
-      options.silent = true;
-      action = "<CMD>FzfLua grep_cword<CR>";
-    }
-    {
-      mode = "n";
-      key = "<leader>b";
+      key = "<leader>Bb"; # Corresponds to Dart tabline bindings.
       options.silent = true;
       action = "<CMD>FzfLua buffers<CR>";
     }

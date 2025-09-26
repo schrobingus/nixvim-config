@@ -15,7 +15,7 @@
     ./pairs.nix
     ./statusline.nix
     # ./surround.nix
-    ./tabline.nix
+    # ./tabline.nix
     ./trailspace.nix
   ];
 }

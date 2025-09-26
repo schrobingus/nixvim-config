@@ -3,7 +3,7 @@
 
 ## Variant 1
 
-- `default.nix` 
+- `default.nix`
 
 - `globals.nix` (1 line)
 
@@ -25,7 +25,7 @@
 
 - `default.nix`
 
-  - Contents include globals, colorscheme, opts, and clipboard. (44 lines) 
+  - Contents include globals, color scheme, opts, and clipboard. (44 lines)
 
 - `plugins.nix` (377 lines)
 
@@ -37,7 +37,7 @@
 
 - `default.nix`
 
-  - Contents include globals, standard keymaps, opts, and clipboard. 
+  - Contents include globals, standard keymaps, opts, and clipboard.
 
 - `plugins/`
 

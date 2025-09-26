@@ -1,4 +1,6 @@
+
 { pkgs, ... }:
+
 let
   mkLua = lua: ''
     lua << EOF
@@ -6,6 +8,7 @@ let
     EOF
   '';
 in
+
 {
   config.extraPlugins = [
     { # Jumps to a char pair quickly. Similar to Snipe, Sneak, Seek, etc.
@@ -14,3 +17,4 @@ in
     }
   ];
 }
+
